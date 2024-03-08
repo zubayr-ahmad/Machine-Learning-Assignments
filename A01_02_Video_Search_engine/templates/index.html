@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Transcript Search</title>
+</head>
+
+<body>
+    <h1>YouTube Transcript Search</h1>
+    <form method="post">
+        <label for="youtube_url">YouTube Video URL:</label>
+        <input type="text" name="youtube_url" required>
+        <br>
+        <label for="search_word">Search Text:</label>
+        <input type="text" name="search_word" required>
+        <br>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if time %}
+    <h2>Search Results</h2>
+    <p>YouTube Video URL: {{ youtube_url }}</p>
+    <p>Search Text: {{ search_word }}</p>
+
+    <ul>
+        {% for timestamp in time %}
+        <li><a href="#" onclick="seekVideo('{{ timestamp }}')">{{ timestamp }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <script>
+        function seekVideo(timestamp) {
+            // Add logic to seek the video to the specified timestamp
+            console.log('Seeking video to timestamp:', timestamp);
+        }
+    </script>
+</body>
+
+</html>
