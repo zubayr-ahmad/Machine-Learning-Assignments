@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <script src="https://www.youtube.com/iframe_api"></script>
+</head>
+
+<body>
+    <h1>Search Results</h1>
+
+    <div id="player"></div>
+
+    <ul id="timestamps">
+        {% for timestamp in time %}
+        <li class="timestamp" data-timestamp="{{ timestamp }}">{{ timestamp }}</li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '360',
+                width: '640',
+                videoId: '{{ video_id }}',
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Do something when the player is ready
+        }
+
+        function onPlayerStateChange(event) {
+            // Do something when the player state changes
+        }
+
+        var timestamps = document.getElementsByClassName('timestamp');
+        for (var i = 0; i < timestamps.length; i++) {
+            timestamps[i].addEventListener('click', function () {
+                var timestamp = this.getAttribute('data-timestamp');
+                playVideoFromTimestamp(timestamp);
+            });
+        }
+
+        function playVideoFromTimestamp(timestamp) {
+            var timeArray = timestamp.split(":");
+            var hours = parseInt(timeArray[0]);
+            var minutes = parseInt(timeArray[1]);
+            var seconds = parseInt(timeArray[2]);
+
+            var totalSeconds = hours * 3600 + minutes * 60 + seconds;
+            player.seekTo(totalSeconds, true);
+            player.playVideo();
+        }
+    </script>
+</body>
+
+</html>
